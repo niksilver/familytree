@@ -14,6 +14,15 @@ class FamilyTreeTest extends FlatSpec with ShouldMatchers{
     val t2 = t + p
   }
 
+  it should "reject a person if they're already in the tree" in {
+    val t1 = new FamilyTree
+    val p = Person("Joan of Arc", Female)
+    val t2 = t1 + p
+    an [Exception] should be thrownBy {
+      t2 + p
+    }
+  }
+
   "people" should "be empty for an empty family tree" in {
     (new FamilyTree).people should be (empty)
   }

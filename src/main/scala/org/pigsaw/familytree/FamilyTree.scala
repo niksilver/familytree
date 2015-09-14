@@ -6,8 +6,13 @@ package org.pigsaw.familytree
 class FamilyTree {
   self =>
 
-  def +(p: Person): FamilyTree = new FamilyTree {
-    override val people = p +: self.people
+  def +(p: Person): FamilyTree = {
+    if (people contains p) {
+      throw new Exception(s"Person $p already exists")
+    }
+    new FamilyTree {
+      override val people = p +: self.people
+    }
   }
 
   val people: Seq[Person] = Nil

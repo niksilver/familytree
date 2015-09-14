@@ -42,4 +42,11 @@ class PersonTest extends FlatSpec with ShouldMatchers {
     val name = "A" * 100
     Person(name, Female)
   }
+
+  "==" should "be true for two people of the same name and same sex" in {
+    val p1 = Person("Donny Osmond", Male)
+    val p2 = Person("Donny Osmond", Male)
+
+    p1 should equal (p2)
+  }
 }
