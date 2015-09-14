@@ -20,7 +20,7 @@ class FamilyTree {
   val parentChildPairs: Seq[(Person,Person)] = Nil
 
   def parentOf(parent: Person, child: Person): FamilyTree = {
-    if (!people.contains(parent)) {
+    if (!people.contains(parent) || !people.contains(child)) {
       throw new Exception(s"Parent $parent is not in the tree")
     }
     new FamilyTree {

@@ -78,6 +78,15 @@ class FamilyTreeTest extends FlatSpec with ShouldMatchers{
     }
   }
 
+  it should "reject a relationship if the child is not already in the tree" in {
+    val p1 = Person("Big Bloggs", Female)
+    val p2 = Person("Little Bloggs", Male)
+    val t = (new FamilyTree) + p1
+    an [Exception] should be thrownBy {
+      val t2 = t.parentOf(p1, p2)
+    }
+  }
+
   "childOf" should "allow us to add a child and parent" in {
     val p1 = Person("Big Bloggs", Female)
     val p2 = Person("Little Bloggs", Male)
