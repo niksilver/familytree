@@ -30,4 +30,16 @@ class FamilyTreeTest extends FlatSpec with ShouldMatchers{
     val t = (new FamilyTree) + p1 + p2
     t.people should contain only (p1, p2)
   }
+
+  "parentChildPairs" should "be initially empty" in {
+    val t = new FamilyTree
+    t.parentChildPairs should be (empty)
+  }
+
+  "parentOf" should "allow us to add a parent and child" in {
+    val t = new FamilyTree
+    val p1 = Person("Big Bloggs", Female)
+    val p2 = Person("Little Bloggs", Male)
+    t.parentOf(p1, p2)
+  }
 }

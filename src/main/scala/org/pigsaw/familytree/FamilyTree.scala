@@ -11,4 +11,8 @@ class FamilyTree {
   }
 
   val people: Seq[Person] = Nil
+
+  val parentChildPairs: Seq[(Person,Person)] = Nil
+
+  def parentOf(parent: Person, child: Person) = {}
 }
