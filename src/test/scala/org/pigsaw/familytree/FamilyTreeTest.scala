@@ -168,4 +168,28 @@ class FamilyTreeTest extends FlatSpec with ShouldMatchers{
     val t2 = t1.parentOf(p1, p2).parentOf(p1, p3)
     t2.fathers should equal (Seq(p1))
   }
+
+  "parentsOf" should "no parents of a parentless person" in {
+    val p = Person("Bobbi Bloggs", Female)
+    val t = (new FamilyTree) + p
+    t.parentsOf(p) should be (empty)
+  }
+
+  it should "give one parent of a child if we have one child-parent relationship" in {
+    val p1 = Person("Mother Bloggs", Female)
+    val p2 = Person("Daughter Bloggs", Female)
+    val t1 = (new FamilyTree) + p1 + p2
+    val t2 = t1.parentOf(p1, p2)
+
+    t2.parentsOf(p2) should equal (Seq(p1))
+  }
+
+  it should "give empty list if we ask for the parent of a parentless person" in {
+    val p1 = Person("Mother Bloggs", Female)
+    val p2 = Person("Daughter Bloggs", Female)
+    val t1 = (new FamilyTree) + p1 + p2
+    val t2 = t1.parentOf(p1, p2)
+
+    t2.parentsOf(p1) should be (empty)
+  }
 }
