@@ -17,4 +17,6 @@ class FamilyTree {
   def parentOf(parent: Person, child: Person): FamilyTree = new FamilyTree {
     override val parentChildPairs = (parent, child) +: self.parentChildPairs
   }
+
+  def childOf(child: Person, parent: Person): FamilyTree = parentOf(parent, child)
 }
