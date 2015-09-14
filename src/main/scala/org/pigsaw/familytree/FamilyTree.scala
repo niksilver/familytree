@@ -16,6 +16,7 @@ class FamilyTree {
     }
     new FamilyTree {
       override val people = p +: self.people
+      override val parentChildPairs = self.parentChildPairs
     }
   }
 

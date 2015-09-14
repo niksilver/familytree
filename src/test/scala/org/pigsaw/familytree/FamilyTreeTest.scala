@@ -23,6 +23,19 @@ class FamilyTreeTest extends FlatSpec with ShouldMatchers{
     }
   }
 
+  it should "not obliterate relationships" in {
+    val p1 = Person("Big Bloggs", Female)
+    val p2 = Person("Little Bloggs", Male)
+    val t1 = (new FamilyTree) + p1 + p2
+    val t2 = t1.parentOf(p1, p2)
+
+    t2.parentChildPairs should equal (Seq((p1, p2)))
+
+    val t3 = t2 + Person("Interloper", Female)
+
+    t3.parentChildPairs should equal (Seq((p1, p2)))
+  }
+
   "people" should "be empty for an empty family tree" in {
     (new FamilyTree).people should be (empty)
   }
