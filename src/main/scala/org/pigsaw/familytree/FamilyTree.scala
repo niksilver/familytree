@@ -32,5 +32,8 @@ class FamilyTree {
   def childOf(child: Person, parent: Person): FamilyTree = parentOf(parent, child)
 
   def parents = (parentChildPairs map ( _._1 )).distinct
+
   def mothers = parents filter {_.sex == Female}
+
+  def fathers = parents filter {_.sex == Male}
 }
