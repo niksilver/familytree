@@ -30,4 +30,16 @@ class PersonTest extends FlatSpec with ShouldMatchers {
   it should "accept a person with name of six characters" in {
     Person("abcdef", Female)
   }
+
+  it should "reject a person with name of 101 characters" in {
+    val name = "A" * 101
+    an [Exception] should be thrownBy {
+      Person(name, Female)
+    }
+  }
+
+  it should "accept a person with name of 100 characters" in {
+    val name = "A" * 100
+    Person(name, Female)
+  }
 }
