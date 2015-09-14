@@ -110,4 +110,33 @@ class FamilyTreeTest extends FlatSpec with ShouldMatchers{
     val t2 = t1.childOf(p3, p2).childOf(p2, p1)
     t2.parentChildPairs should contain only ((p1, p2), (p2, p3))
   }
+
+  "mothers" should "be empty for an empty tree" in {
+    (new FamilyTree).mothers should be (empty)
+  }
+
+  it should "give one mother if only one mother added" in {
+    val p1 = Person("Mother Bloggs", Female)
+    val p2 = Person("Son Bloggs", Male)
+    val t1 = (new FamilyTree) + p1 + p2
+    val t2 = t1.parentOf(p1, p2)
+    t2.mothers should equal (Seq(p1))
+  }
+
+  it should "give one mother if only one mother added but there's a another female" in {
+    val p1 = Person("Mother Bloggs", Female)
+    val p2 = Person("Daughter Bloggs", Female)
+    val t1 = (new FamilyTree) + p1 + p2
+    val t2 = t1.parentOf(p1, p2)
+    t2.mothers should equal (Seq(p1))
+  }
+
+  it should "give one mother if one mother has two children" in {
+    val p1 = Person("Mother Bloggs", Female)
+    val p2 = Person("Daughter Bloggs", Female)
+    val p3 = Person("Son Bloggs", Male)
+    val t1 = (new FamilyTree) + p1 + p2 + p3
+    val t2 = t1.parentOf(p1, p2).parentOf(p1, p3)
+    t2.mothers should equal (Seq(p1))
+  }
 }

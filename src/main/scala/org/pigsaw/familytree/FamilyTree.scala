@@ -6,6 +6,10 @@ package org.pigsaw.familytree
 class FamilyTree {
   self =>
 
+  val people: Seq[Person] = Nil
+
+  val parentChildPairs: Seq[(Person,Person)] = Nil
+
   def +(p: Person): FamilyTree = {
     if (people contains p) {
       throw new Exception(s"Person $p already exists")
@@ -14,10 +18,6 @@ class FamilyTree {
       override val people = p +: self.people
     }
   }
-
-  val people: Seq[Person] = Nil
-
-  val parentChildPairs: Seq[(Person,Person)] = Nil
 
   def parentOf(parent: Person, child: Person): FamilyTree = {
     if (!people.contains(parent) || !people.contains(child)) {
@@ -30,4 +30,7 @@ class FamilyTree {
   }
 
   def childOf(child: Person, parent: Person): FamilyTree = parentOf(parent, child)
+
+  def parents = (parentChildPairs map ( _._1 )).distinct
+  def mothers = parents filter {_.sex == Female}
 }
