@@ -50,4 +50,13 @@ class FamilyTreeTest extends FlatSpec with ShouldMatchers{
     val t2 = t.parentOf(p1, p2)
     t2.parentChildPairs should equal (Seq((p1, p2)))
   }
+
+  it should "register two new parent-child relationships" in {
+    val t = new FamilyTree
+    val p1 = Person("Big Bloggs", Female)
+    val p2 = Person("Little Bloggs", Male)
+    val p3 = Person("Tiny Bloggs", Male)
+    val t2 = t.parentOf(p1, p2).parentOf(p2, p3)
+    t2.parentChildPairs should contain only ((p1, p2), (p2, p3))
+  }
 }
