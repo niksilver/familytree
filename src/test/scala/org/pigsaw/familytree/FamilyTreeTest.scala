@@ -87,6 +87,40 @@ class FamilyTreeTest extends FlatSpec with ShouldMatchers{
     }
   }
 
+  it should "reject a relationship if the child has a third parent" in {
+    val p1 = Person("Big Bloggs 1", Female)
+    val p2 = Person("Big Bloggs 2", Male)
+    val p3 = Person("Big Bloggs 3", Female)
+    val p4 = Person("Little Bloggs", Male)
+    val t1 = (new FamilyTree) + p1 + p2 + p3 + p4
+    val t2 = t1.parentOf(p1, p4).parentOf(p2, p4)
+    an [Exception] should be thrownBy {
+      t2.parentOf(p3, p4)
+    }
+  }
+
+  it should "reject a relationship if we're adding a second father" in {
+    val p1 = Person("Big Bloggs 1", Male)
+    val p2 = Person("Big Bloggs 2", Male)
+    val p3 = Person("Little Bloggs", Male)
+    val t1 = (new FamilyTree) + p1 + p2 + p3
+    val t2 = t1.parentOf(p1, p3)
+    an [Exception] should be thrownBy {
+      t2.parentOf(p2, p3)
+    }
+  }
+
+  it should "reject a relationship if we're adding a second mother" in {
+    val p1 = Person("Big Bloggs 1", Female)
+    val p2 = Person("Big Bloggs 2", Female)
+    val p3 = Person("Little Bloggs", Male)
+    val t1 = (new FamilyTree) + p1 + p2 + p3
+    val t2 = t1.parentOf(p1, p3)
+    an [Exception] should be thrownBy {
+      t2.parentOf(p2, p3)
+    }
+  }
+
   "childOf" should "allow us to add a child and parent" in {
     val p1 = Person("Big Bloggs", Female)
     val p2 = Person("Little Bloggs", Male)

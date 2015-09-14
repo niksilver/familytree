@@ -23,6 +23,15 @@ class FamilyTree {
     if (!people.contains(parent) || !people.contains(child)) {
       throw new Exception(s"Parent $parent is not in the tree")
     }
+    if (parentsOf(child).length == 2) {
+      throw new Exception("Child has enough parents already")
+    }
+    if (hasFather(child) && parent.sex == Male) {
+      throw new Exception("Child already has a father")
+    }
+    if (hasMother(child) && parent.sex == Female) {
+      throw new Exception("Child already has a mother")
+    }
     new FamilyTree {
       override val people = self.people
       override val parentChildPairs = (parent, child) +: self.parentChildPairs
@@ -38,4 +47,8 @@ class FamilyTree {
   def fathers = parents filter {_.sex == Male}
 
   def parentsOf(child: Person) = (parentChildPairs filter (_._2 == child) map ( _._1 ))
+
+  def hasFather(child: Person) = parentsOf(child) exists { _.sex == Male }
+
+  def hasMother(child: Person) = parentsOf(child) exists { _.sex == Female }
 }
