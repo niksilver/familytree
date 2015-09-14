@@ -14,5 +14,7 @@ class FamilyTree {
 
   val parentChildPairs: Seq[(Person,Person)] = Nil
 
-  def parentOf(parent: Person, child: Person) = {}
+  def parentOf(parent: Person, child: Person): FamilyTree = new FamilyTree {
+    override val parentChildPairs = (parent, child) +: self.parentChildPairs
+  }
 }
