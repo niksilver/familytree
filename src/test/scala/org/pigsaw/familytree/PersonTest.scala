@@ -14,4 +14,20 @@ class PersonTest extends FlatSpec with ShouldMatchers {
   it should "allow a female" in {
     Person("Fred Bloggs", Female)
   }
+
+  it should "reject a person with name of five characters" in {
+    an [Exception] should be thrownBy {
+      Person("abcde", Female)
+    }
+  }
+
+  it should "reject a person with name of four characters" in {
+    an [Exception] should be thrownBy {
+      Person("abcd", Female)
+    }
+  }
+
+  it should "accept a person with name of six characters" in {
+    Person("abcdef", Female)
+  }
 }
