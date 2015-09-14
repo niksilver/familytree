@@ -19,8 +19,14 @@ class FamilyTree {
 
   val parentChildPairs: Seq[(Person,Person)] = Nil
 
-  def parentOf(parent: Person, child: Person): FamilyTree = new FamilyTree {
-    override val parentChildPairs = (parent, child) +: self.parentChildPairs
+  def parentOf(parent: Person, child: Person): FamilyTree = {
+    if (!people.contains(parent)) {
+      throw new Exception(s"Parent $parent is not in the tree")
+    }
+    new FamilyTree {
+      override val people = self.people
+      override val parentChildPairs = (parent, child) +: self.parentChildPairs
+    }
   }
 
   def childOf(child: Person, parent: Person): FamilyTree = parentOf(parent, child)
